@@ -18,6 +18,8 @@ public class ObstacleManager {
 
     private long startTime;
 
+    private boolean addedScore = false;
+
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color){
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
@@ -59,10 +61,15 @@ public class ObstacleManager {
             int yStart = (int) (Math.random()*(Constants.SCREEN_HEIGHT - playerGap));
             obstacles.add(0, new Obstacle(obstacleHeight, color, obstacles.get(0).getRectangle().right + obstacleHeight + obstacleGap, yStart, playerGap));
             obstacles.remove(obstacles.size() - 1);
+            addedScore = false;
         }
 
-        if (obstacles.get(obstacles.size()-1).getRectangle().right <= Constants.SCREEN_WIDTH/2){
+        if (obstacles.get(obstacles.size()-1).getRectangle().right <= Constants.SCREEN_WIDTH/2 && !addedScore){
             GamePanel.score++;
+            if (GamePanel.score > GamePanel.highScore){
+                GamePanel.highScore++;
+            }
+            addedScore = true;
         }
     }
 

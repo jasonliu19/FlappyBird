@@ -21,7 +21,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private MainThread thread;
 
     public static int score;
-
+    public static int highScore;
 
     private Rect r = new Rect();
     private RectPlayer player;
@@ -38,6 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         thread = new MainThread(getHolder(), this);
 
         score = 0;
+        highScore = 0;
 
         player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(255, 0, 0), BitmapFactory.decodeResource(getResources(), R.drawable.bird2));
 
@@ -142,6 +143,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         paint.setTextSize(30);
         String text = "" + score;
         canvas.drawText(text, 50, 50, paint);
+        text = "" + highScore;
+        paint.setColor(Color.RED);
+        canvas.drawText(text, 100, 50, paint);
     }
 
     private void drawCentreText(Canvas canvas, Paint paint, String text) {
