@@ -10,51 +10,48 @@ import android.graphics.Rect;
  */
 
 public class Obstacle implements GameObject{
-    static Bitmap bitmap1;
-    static Bitmap bitmap2;
-    private Rect rectangle;
-    private int color;
-    private Rect rectangle2;
+    static Bitmap bottomTubeBitmap;
+    static Bitmap topTubeBitmap;
+    private Bitmap croppedTop;
+    private Rect topRect;
+    private Rect botRect;
 
-    public Rect getRectangle() {
-        return rectangle;
+    public Rect getTopRect() {
+        return topRect;
     }
 
     public void incrementX(float x){
-        rectangle.left -= x;
-        rectangle.right -=x;
-        rectangle2.left -= x;
-        rectangle2.right -=x;
+        topRect.left -= (int)x;
+        topRect.right -=(int)x;
+        botRect.left -= (int)x;
+        botRect.right -=(int)x;
     }
 
-    public Obstacle(int rectHeight, int color, int startX, int startY, int playerGap)
+    public Obstacle(int rectHeight, int startX, int startY, int playerGap)
     {
         //l,t,r,b
-        this.color = color;
+        topRect = new Rect(startX, 0, startX+rectHeight, startY);
+        botRect = new Rect(startX, startY + playerGap, startX + rectHeight, Constants.SCREEN_HEIGHT);
+        System.out.println(topTubeBitmap.getHeight()- topRect.bottom);
+        if (topTubeBitmap.getHeight() -topRect.bottom < 0){
+            topRect.bottom = 1;
+        }
+        croppedTop = Bitmap.createBitmap(topTubeBitmap,0,topTubeBitmap.getHeight()- topRect.bottom, topTubeBitmap.getWidth(), topRect.bottom);
 
-        rectangle = new Rect(startX, 0, startX+rectHeight, startY);
-        rectangle2 = new Rect(startX, startY + playerGap, startX + rectHeight, Constants.SCREEN_HEIGHT);
     }
 
     public boolean playerCollide(RectPlayer player){
-//        if (rectangle.contains(player.getRectangle().left, player.getRectangle().top)
-//                || rectangle.contains(player.getRectangle().right, player.getRectangle().top)
-//                || rectangle.contains(player.getRectangle().left, player.getRectangle().bottom)
-//                || rectangle.contains(player.getRectangle().right, player.getRectangle().bottom))
-//                return true;
-        return Rect.intersects(rectangle, player.getRectangle()) || Rect.intersects(rectangle2, player.getRectangle());
+        return Rect.intersects(topRect, player.getRectangle()) || Rect.intersects(botRect, player.getRectangle());
     }
 
     @Override
     public void update() {
-
     }
 
     @Override
     public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(color);
-        canvas.drawBitmap(bitmap2, rectangle.left, rectangle.bottom-bitmap2.getHeight(),null);
-        canvas.drawBitmap(bitmap1, rectangle2.left, rectangle2.top,null);
+        canvas.drawBitmap(croppedTop, topRect.left, 1,null);
+        canvas.drawBitmap(bottomTubeBitmap, botRect.left, botRect.top,null);
+
     }
 }
