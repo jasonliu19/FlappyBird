@@ -4,4 +4,4 @@ A remake of the popular mobile game Flappy Bird, but with a goose as the bird. C
 
 Starting Screen | Gameplay | Game Over Screen
 ------------------------------- | ---------------------------- | --------------------------------
-![](demoPictures/flappy1.png?raw=true) | ![](demoPictures/flappy2.png?raw=true) | ![](demoPictures/flappy3.png?raw=true)
+![](screenshots/flappy1.png?raw=true) | ![](screenshots/flappy2.png?raw=true) | ![](screenshots/flappy3.png?raw=true)
