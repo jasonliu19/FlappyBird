@@ -1,4 +1,4 @@
-# Flappy Goose
+# Flappy Bird
 A remake of the popular mobile game Flappy Bird. Coded using only the standard Android libraries. 
 ## Screenshots
 
